@@ -1,94 +1,94 @@
-# Vývoj aplikací pro Raspberry Pi Pico W, MicroPython
-- Operační systém Windows 11
-- Je potřeba mít nainstalovaný vývojový program VS Code
-- Na Raspberry Pi Pico W nahraný správný firmware
+# Developing applications for Raspberry Pi Pico W, MicroPython
+- Operating system Windows 11
+- VS Code development program needs to be installed
+- Correct firmware needs to be loaded onto the Raspberry Pi Pico W
 
-## Instalace a nastavení WSL
-1. Povolení WSL2 ve windows <br />
-    - [Povolení susystému pro linux](https://www.makeuseof.com/enable-windows-subsystem-for-linux/) <br />
-    - [Odkaz na nastavení](https://learn.microsoft.com/en-us/windows/wsl/install)
+## Installing and setting up WSL
+1. Enable WSL2 on Windows <br />
+    - [Enable Windows Subsystem for Linux](https://www.makeuseof.com/enable-windows-subsystem-for-linux/) <br />
+    - [Link to Settings](https://learn.microsoft.com/en-us/windows/wsl/install)
    
-2. Nastavení verze WSL 2 - 
-   <span style="color:yellow">Windows konzole</span> <br />
+2. Set WSL 2 as the default version - 
+   <span style="color:yellow">Windows console</span> <br />
    ```wsl --set-default-version 2```
 
-3. Instalace distribuce Ubuntu - 
-   <span style="color:yellow">Windows konzole</span> <br />
+3. Install Ubuntu distribution - 
+   <span style="color:yellow">Windows console</span> <br />
    ```wsl --install -d Ubuntu```
 
-4. Aktualizace závislostí a upgrade systému - 
-   <span style="color:yellow">WSL konzole</span><br />
+4. Update dependencies and upgrade the system - 
+   <span style="color:yellow">WSL console</span><br />
    ```sudo apt update -y && sudo apt upgrade -y```
 
-5. Otevřít adresář, který chci namountovat -
-   <span style="color:yellow">WSL konzole</span><br />
+5. Open the directory I want to mount -
+   <span style="color:yellow">WSL console</span><br />
    ```cd /mnt/c/Users/David/Desktop/RPIPico```
 
-6. Napojím VSCode do této složky -
-   <span style="color:yellow">WSL konzole</span><br />
+6. Attach VSCode to this folder -
+   <span style="color:yellow">WSL console</span><br />
    ```code .```
 
-## Instalace nástrojů pro připojení USB zařízení
+## Installing tools for connecting USB devices
 
-7. Stáhnu poslední verzi usbipd (aktuálně 2.4.1)
-   - [Odkaz na releases](https://github.com/dorssel/usbipd-win/releases)
-   - Soubor .msi a nainstaluji do windows
+7. Download the latest version of usbipd (currently 2.4.1)
+   - [Link to releases](https://github.com/dorssel/usbipd-win/releases)
+   - Download the .msi file and install it on Windows
    
-8. Doinstaluji potřebné tools k propojení s windows -
-   <span style="color:yellow">WSL konzole</span><br />
+8. Install necessary tools for connecting to Windows -
+   <span style="color:yellow">WSL console</span><br />
    ```
    sudo apt install linux-tools-generic hwdata
    sudo update-alternatives --install /usr/local/bin/usbip usbip /usr/lib/linux-tools/*-generic/usbip 20
    ```
 
-9.  Připojím desku do USB
+9.  Connect the board to USB
     
-10. Zobrazení připojených zařízení -
-    <span style="color:yellow">Windows konzole</span><br />
+10. Display connected devices -
+    <span style="color:yellow">Windows console</span><br />
     ```usbipd wsl list```
 
-11. Připojím USB zařízení do WSL -
+11. Attach USB device to WSL -
     <span style="color:red">Admin</span>
-    <span style="color:yellow">windows konzole</span><br />
+    <span style="color:yellow">windows console</span><br />
     ```usbipd wsl attach --busid 6-1```
 
-12. Uvnitř WSL vypíšu připojená zařízení -
-    <span style="color:yellow">WSL konzole</span><br />
+12. Display connected devices inside WSL -
+    <span style="color:yellow">WSL console</span><br />
     ```lsusb```
 
-## Příprava a nahrání projektu do desky
+## Preparing and uploading the project to the board
 
-13. Najdu složku, kterou chci otevřít ve VS code připojenou do WLS -
-    <span style="color:yellow">WSL konzole</span><br />
+13. Find the directory I want to open in VS code, which is connected to WLS -
+    <span style="color:yellow">WSL console</span><br />
     ```code .```
 
-14. Python je již předinstalován, ale je potřeba doinstalovat pip -
-    <span style="color:yellow">WSL konzole</span><br />
+14. Python is already installed, but pip needs to be installed -
+    <span style="color:yellow">WSL console</span><br />
     ```sudo apt install python3-pip```
 
-15. Doinstaluji potřebný balíček pyserial pro python -
-    <span style="color:yellow">WSL konzole</span><br />
+15. Install the necessary pyserial package for Python -
+    <span style="color:yellow">WSL console</span><br />
     ```pip install pyserial```
 
-16. Nainstaluji doplňky do VS code pro Raspberry Pi Pico W -
+16. Install VS code extensions for Raspberry Pi Pico W -
     <span style="color:orange">VS code</span><br />
     - Pico-W-Go
     - Python
     - Pylance
     - IntelliCode
 
-17.  Předkonfiguruji projekt -
+17. Configure the project -
     <span style="color:orange">VS code</span><br />
     - CTRL + L SHIFT + P -> Pico-W-Go > Configure project
 
-18. Otevřu konzoli vREPL pro desku -
+18. Open a console in the REPL for the board -
     <span style="color:orange">VS code</span><br />
-    - kliknutím na + nová konzole a zvolím vREPL, tím jsem otevřek konzoli desky
+    - By clicking on the + New Console and selecting the vREPL, open the console for the board.
 
-19. Zobrazím virtuální file system desky, abych viděl soubory nahrané v desce
+19. Display the virtual file system of the board to see the files uploaded to it
     - Pico-W-Go > Toggle Virtual File System (closes existing vREPLs)
 
-20. Naprodgramuji script ```script.py``` u sebe v adresáři -
+20. Create program ```script.py``` in my local directory -
     <span style="color:orange">VS code</span><br />
     ```
     from machine import Pin
@@ -101,8 +101,8 @@
     led.off()
     ```
 
-21. Program přetáhnu do remote adresáře desky a spustím -
+21. Drag and drop the program to the remote directory of the board and run it -
     <span style="color:orange">VS code</span><br />
-    Pico-W-Go > Remote > Run current file
+    - Pico-W-Go > Remote > Run current file
 
 22. Happy Coding

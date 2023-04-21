@@ -1,0 +1,5 @@
+# Ignore generated files from VS code
+.vscode
+
+# Ignore generated files from pico-w-go
+.picowgo
