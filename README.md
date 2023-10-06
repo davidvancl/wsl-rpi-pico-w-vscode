@@ -105,4 +105,4 @@
     <span style="color:orange">VS code</span><br />
     - Pico-W-Go > Remote > Run current file
 
-22. Happy Coding
+22. Happy Coding!
